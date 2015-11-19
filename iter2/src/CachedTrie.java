@@ -5,10 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.Map.Entry;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
@@ -135,34 +137,39 @@ public class CachedTrie extends GetSongHeat{
 		System.out.println();
 	}
 	
-	
+		
 	public static int[] orderResult(int[] res){
 		Map<Integer,Integer> map=new HashMap<>();
+		int [] heatArray=new int[4];
+		
 		for(int i=0;i<res.length;i++){
-			map.put(res[i], getHeat(res[i]));
+			map.put(getHeat(res[i]), res[i]);
+			//System.out.println(res[i]+" "+getHeat(res[i]));
+			heatArray[i]=getHeat(res[i]);
 		}
-		map=sortByValue(map);
-		for(int i=0;i<res.length;i++)
-			res[i]=map.get(i);
-		return res;
+		Arrays.sort(heatArray);
+		//reverse order for descending order
+		for(int i=0;i<2;i++){
+			int temp=heatArray[i];
+			heatArray[i]=heatArray[3-i];
+			heatArray[3-i]=temp;
+		}
+		
+		for(int i=0;i<heatArray.length;i++){
+			res[i]=map.get(heatArray[i]);
+		}
+	      
+	     /* System.out.println("now debug result array);");
+	      for(int i=0;i<4;i++){
+	    	  System.out.println(res[i]);
+	      }
+	      */
+	      return res;
 	}
 	
-	public static Map sortByValue(Map unsortedMap){
-		Map sortedMap=new TreeMap(new ValueComparator(unsortedMap));
-		sortedMap.putAll(unsortedMap);
-		return sortedMap;
-	}
-	public static class ValueComparator implements Comparator{
-		Map map;
-		public ValueComparator(Map map){
-			this.map=map;
-		}
-		public int compare(Object keyA, Object keyB){
-			Comparable valueA=(Comparable)map.get(keyA);
-			Comparable valueB=(Comparable)map.get(keyB);
-			return valueB.compareTo(valueA);
-		}
-	}
+
+	
+
 	
 	/*
 	public static void searchSubstring(TrieNode root,int level, char[] collectLetters, String substring){
@@ -279,14 +286,14 @@ public class CachedTrie extends GetSongHeat{
 		System.out.println("found"+found);
 		//searchSubstring(root,1,pool,"A heart that");
 		//test case for top4 with whate
-		int[] res=findSubstring("whate");
-		int heat1=getHeat(2033);
-		int heat2=getHeat(673);
-		int heat3=getHeat(392);
-		int heat4=getHeat(148);
-		int heat5=getHeat(2817);
-		System.out.println(heat1+" "+heat2+" "+heat3+" "+heat4+" "+heat5);
-		res=orderResult(res);
+		int[] res=findSubstring("listen");
+		int heat1=getHeat(3095);
+		int heat2=getHeat(2322);
+		int heat3=getHeat(923);
+		//int heat4=getHeat(148);
+		//int heat5=getHeat(2817);
+		System.out.println(heat1+" "+heat2+" "+heat3+" ");
+		//res=orderResult(res);
 		
 	}
 	

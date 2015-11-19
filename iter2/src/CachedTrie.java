@@ -2,10 +2,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Vector;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 
 
@@ -131,7 +136,33 @@ public class CachedTrie extends GetSongHeat{
 	}
 	
 	
+	public static int[] orderResult(int[] res){
+		Map<Integer,Integer> map=new HashMap<>();
+		for(int i=0;i<res.length;i++){
+			map.put(res[i], getHeat(res[i]));
+		}
+		map=sortByValue(map);
+		for(int i=0;i<res.length;i++)
+			res[i]=map.get(i);
+		return res;
+	}
 	
+	public static Map sortByValue(Map unsortedMap){
+		Map sortedMap=new TreeMap(new ValueComparator(unsortedMap));
+		sortedMap.putAll(unsortedMap);
+		return sortedMap;
+	}
+	public static class ValueComparator implements Comparator{
+		Map map;
+		public ValueComparator(Map map){
+			this.map=map;
+		}
+		public int compare(Object keyA, Object keyB){
+			Comparable valueA=(Comparable)map.get(keyA);
+			Comparable valueB=(Comparable)map.get(keyB);
+			return valueB.compareTo(valueA);
+		}
+	}
 	
 	/*
 	public static void searchSubstring(TrieNode root,int level, char[] collectLetters, String substring){
@@ -184,9 +215,9 @@ public class CachedTrie extends GetSongHeat{
 	 * @param substring 	store the substring "ck" that is going to be searched
 	 */
 	
-	public static Vector<String> findSubstring(String word){
+	public static int[] findSubstring(String word){
 		TrieNode currentNode=root;
-		Vector<String> res=new Vector<>();
+		//Vector<String> res=new Vector<>();
 		//fix word
 		word=word.toLowerCase();
 		word=word.replaceAll("[^a-zA-Z]", "");
@@ -196,7 +227,7 @@ public class CachedTrie extends GetSongHeat{
 		
 		for(index=0;index<size;index++){
 			if(currentNode==null)
-				return res;
+				break;
 			int pos=lookupTable.get(characters[index]);
 
 			currentNode=currentNode.children[pos];
@@ -212,7 +243,7 @@ public class CachedTrie extends GetSongHeat{
 		}
 		//if(index==size&&currentNode==null) return res;
 		//if(currentNode!=null&&!currentNode.isEnd) return res;
-		return res;
+		return currentNode.topId;
 	}
 
 	
@@ -247,8 +278,16 @@ public class CachedTrie extends GetSongHeat{
 		boolean found=findWord("you  plz");
 		System.out.println("found"+found);
 		//searchSubstring(root,1,pool,"A heart that");
-		Vector<String> res=new Vector<>();
-		res=findSubstring("words");
+		//test case for top4 with whate
+		int[] res=findSubstring("whate");
+		int heat1=getHeat(2033);
+		int heat2=getHeat(673);
+		int heat3=getHeat(392);
+		int heat4=getHeat(148);
+		int heat5=getHeat(2817);
+		System.out.println(heat1+" "+heat2+" "+heat3+" "+heat4+" "+heat5);
+		res=orderResult(res);
+		
 	}
 	
 	

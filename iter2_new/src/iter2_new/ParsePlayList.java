@@ -84,6 +84,7 @@ public class ParsePlayList{
         ex.printStackTrace();
       }
   }
+/*
   public static void WriteTop8() throws IOException{
       try{
       FileWriter fstream;
@@ -169,7 +170,8 @@ public class ParsePlayList{
         ex.printStackTrace();
       }
   }
-
+  */
+  /*
     public static void WriteToFile() throws IOException{
       try{
       FileWriter fstream;
@@ -184,7 +186,7 @@ public class ParsePlayList{
       //Iterator<Integer> playListItr=playListMap.keySet().iterator();
       Iterator<Entry<Integer,Vector<Integer>>> playListItr=playListMap.entrySet().iterator();
       //write format ||PID:12__Heat:23__Song1,Song2,Song3,Song4,......,||
-      while(playListItr.hasNext()/*&&count<recordsToWrite*/){
+      while(playListItr.hasNext()&&count<recordsToWrite){
         Map.Entry<Integer,Vector<Integer>> entry =(Map.Entry<Integer,Vector<Integer>>)playListItr.next();
         
         int PID=entry.getKey();
@@ -212,15 +214,15 @@ public class ParsePlayList{
       }
     }
     
+    */
 //find top 8
   public static void SearchTop8() throws IOException{
-    try{
-      Build_Max_Heap();
-      WriteTop8();
-    }
-    catch(IOException ex){
-      ex.printStackTrace();
-    }
+	  System.out.println("in search");
+	 // printPlayListMap();
+    Build_Max_Heap();
+    //Build_Min_Heap();
+    //printHeap();
+      //WriteTop8();
   }
 
 
@@ -229,19 +231,26 @@ public class ParsePlayList{
     
   public static void Build_Max_Heap(){
       int i=0;
-      //first initialize with 8 songlists
+      //first initialize with 1024 songlists
       for(Map.Entry<Integer,Vector<Integer>> entry:playListMap.entrySet()){
-          maxheap.add(entry.getKey());
+         
+    	  maxheap.add(entry.getKey());
+    	  System.out.println("pid is "+entry.getKey());
+    	 
           BubbleUpMax(maxheap.size()-1);
+          printHeap();
           i++;
-          if(i>9){
-            if(getHeatMax(root)<entry.getValue().firstElement()){
+          if(i>3){
+        	  break;
+        	  
+        	  /*
+        	  if(getHeatMax(root)<entry.getValue().firstElement()){
                 maxheap.add(entry.getKey());
                 BubbleUpMax(maxheap.size()-1);
+                */
             }
           }     
       }
-  }
 
   public static void Build_Min_Heap(){
     int i=0;
@@ -249,10 +258,9 @@ public class ParsePlayList{
           minheap.add(entry.getKey());
           BubbleUpMin(minheap.size()-1);
           i++;
-          if(i>9)
+          if(i>1023)
             break;
       }
-
   }
   public static void GenerateSongMap() throws IOException{
   String fileName="song_list.txt";
@@ -294,9 +302,13 @@ public static int getHeatMin(int current){
   return heat;
 }
 public static int getHeatMax(int current){
-  int PID=maxheap.get(current);
-  int heat=playListMap.get(PID).firstElement();
-  return heat;
+	int PID=-1;
+	int heat=-1;
+	if(maxheap.contains(current)){
+	  PID=maxheap.get(current);
+	  heat=playListMap.get(PID).firstElement();
+	}
+	return heat;
 }
 
 public static void BubbleUpMin(int current){
@@ -323,7 +335,10 @@ public static void BubbleUpMax(int current){
 
 
 public static int ExtractTopMax(){
-    int top=getHeatMax(root);
+	//printHeap();
+	
+    int top=maxheap.get(3);
+    System.out.println("top max id is"+top);
     maxheap.set(root,maxheap.get(maxheap.size()-1));
     maxheap.remove(maxheap.size()-1);
     HeapifyMax(root);
@@ -332,11 +347,13 @@ public static int ExtractTopMax(){
 
   public static int ExtractTopMin(){
     int top=getHeatMin(root);
+    System.out.println("top min heat is"+top);
+
     minheap.set(root,minheap.get(minheap.size()-1));
     minheap.remove(minheap.size()-1);
     HeapifyMin(root);
 
-    return top;
+    return root;
   }
   
   public static void HeapifyMin(int current){
@@ -363,11 +380,11 @@ public static int ExtractTopMax(){
   }
   public static void HeapifyMax(int current){
     int left=GetLeftChild(current);
-    p(left);
+    //p(left);
     int right=GetRightChild(current);
-    p(right);
+    //p(right);
     int largest=current;
-    p(largest);
+   // p(largest);
 
     if(left<=maxheap.size()-1&&getHeatMax(left)>getHeatMax(largest)){
       largest=left;
@@ -382,27 +399,51 @@ public static int ExtractTopMax(){
     }
     return;
   }
+  
+  public static void debugTop(){
+	  System.out.println("im in debug top");
+	  //printHeap();
+	  int min=ExtractTopMin();
+	  System.out.println("min is"+min);
+	  int max=ExtractTopMax();
+	  System.out.println("max is"+max);
+	  System.out.println("max size"+maxheap.size());
+	  System.out.println("min size"+minheap.size());
+
+	  //printHeap();
+  }
   public static void printHeap(){
 
     int i=1;
-    while(i<=9){
-      i++;
+    
+    System.out.println("current maxheap size is(0 index included)"+maxheap.size());
+    while(i<=maxheap.size()-1){
+        System.out.println("my index is"+i+"my id is"+maxheap.get(i++)+"my heat is"+ getHeatMax(i++)+" ");
     }
     System.out.println("");
-   System.out.println("current maxheap size is(0 index included)"+maxheap.size());
+	
+    System.out.println("current minheap size is(0 index included)"+minheap.size());
 
-    
     i=1;
       while(i<=minheap.size()-1){
             System.out.println("my index is"+i+"my id is"+minheap.get(i)+"my heat is"+ getHeatMin(i)+" ");
 
       i++;
     }
-    System.out.println("current minheap size is(0 index included)"+minheap.size());
     System.out.println("");
   }
 
-  public static void printHashMap(){
+  public static void printPlayListMap(){
+	  Iterator<Entry<Integer,Vector<Integer>>> playListMapItr=playListMap.entrySet().iterator();
+      while(playListMapItr.hasNext()){
+          Map.Entry<Integer,Vector<Integer>> entry =(Map.Entry<Integer,Vector<Integer>>)playListMapItr.next();
+          int PID=entry.getKey();
+          int heat=entry.getValue().elementAt(0);
+          System.out.println("PID "+PID+"heat "+heat);
+      }
+	  
+  }
+  public static void printSongHashMap(){
       Iterator<Entry<Integer,String>> songMapItr=songMap.entrySet().iterator();
       while(songMapItr.hasNext()){
           Map.Entry<Integer,String> entry =(Map.Entry<Integer,String>)songMapItr.next();

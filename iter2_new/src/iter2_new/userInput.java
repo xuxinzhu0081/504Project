@@ -15,15 +15,23 @@ public class userInput extends CachedTrie{
 	
 	public static void main (String[] args) throws IOException{
 		//initialize playListMap, songListMap, calculate songHeat
+		//CachedTrie();
+		runParsing();
+		initTable();
+		getSongHeat();
+		constructTree();
 		
-		CachedTrie();
+		//printPlayListMap();
+
 		while(true){
 			System.out.println("type name");
 			BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 			String name=br.readLine();
-			int[] res= findSubstring(name);
-			if(name=="quit")
+			if(name=="123"){
 				break;
+			}
+			int[] res= findSubstring(name);
+			
 			
 			if(findSubstring(name)!=null){
 				for(int i=0;i<res.length;i++)
@@ -32,6 +40,8 @@ public class userInput extends CachedTrie{
 			
 			else continue;	
 		}
+		
+		return;
 	}		
 }
 

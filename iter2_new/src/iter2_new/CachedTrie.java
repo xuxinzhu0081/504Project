@@ -74,14 +74,14 @@ public class CachedTrie extends GetSongHeat{
 	public static void constructTree(){
 		int count=0;
 
-		System.out.println("size of map is"+songMap.size());
+		System.out.println("size of song map is"+songMap.size());
 		//itertate in songHeatMap, get the heat from songHeatMap and name
 		Iterator it=songMap.entrySet().iterator();
 		while(it.hasNext()){
 			Map.Entry<Integer,String> pair=(Map.Entry)it.next();
 			int id=pair.getKey();
 			//int heat=getHeat(id);
-			
+		
 			String name=getSongName(id).toLowerCase();
 			//System.out.println("name "+name+" count is"+count++);
 			ArrayList<Integer> insertPos=findInsertPosition(name);	
@@ -110,10 +110,10 @@ public class CachedTrie extends GetSongHeat{
 	
 	public static void resolveTop4(TrieNode runner, int id){
 		//print current runner 
-		System.out.println("im runner " +runner.word);
+		//System.out.println("im runner " +runner.word);
 		int heat=getHeat(id);
 
-		System.out.println("song id with "+id+" heat is "+ heat);
+		//System.out.println("song id with "+id+" heat is "+ heat);
 		
 		//if this song never appears in playlist, bypass it
 		if(heat==-1) return;
@@ -132,10 +132,12 @@ public class CachedTrie extends GetSongHeat{
 			runner.topId[min_id]=id;
 		}
 		//debug 
+		/*
 		for(int i=0;i<4;i++){
 			System.out.print(runner.topId[i]+" ");
 		}
 		System.out.println();
+		*/
 	}
 	
 		
@@ -273,7 +275,9 @@ public class CachedTrie extends GetSongHeat{
 	
 	
 	public static void CachedTrie() throws IOException{
-		process();
+		//process();
+		runParsing();
+		getSongHeat();
 		initTable();
 		//ArrayList<Integer> test=findInsertPosition("ACdegH");
 		//for(int i=0;i<test.size();i++){

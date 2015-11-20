@@ -7,13 +7,10 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.Map.Entry;
 
-public class GetSongHeat extends ParsePlayList{
+public class GetSongHeat extends ParseAgain{
 	//songHeatMap: ID||Heat,playListId 
 	//public static HashMap<Integer,SongCell> songHeatMap=new HashMap<>();
 	//public static HashMap<Integer,Vector<Integer>> playListMap= new HashMap<Integer,Vector<Integer>>();
-	
-	
-	
 	
 	public static void getSongHeat(){
 		//iterate each entry in playlistMap and add value 
@@ -89,26 +86,18 @@ public class GetSongHeat extends ParsePlayList{
 	      
 	}
 	
-	/*public static void main(String[] args) throws IOException{
-	      GeneratePlayListMap();
-	      WriteToFile(); //write playlist hashmap to txt file
-	      GenerateSongMap(); //generate songmap
-	      //printHashMap();
-	      SearchTop8();
-	      WriteTop128();
-	      //printHashMap();
-	      getSongHeat();
-	      printSongHeatMap();      
-	}
-	*/
+	
+	
 	public static void process() throws IOException{
-		GeneratePlayListMap();
-		WriteToFile(); //write playlist hashmap to txt file
-	    GenerateSongMap(); //generate songmap
+		//printHeap();
+		//GeneratePlayListMap();
+		//WriteToFile(); //write playlist hashmap to txt file
+	    //GenerateSongMap(); //generate songmap
 	      //printHashMap();
-	    SearchTop8();
-	    WriteTop128();
+	    //SearchTop8();
+	    //WriteTop128();
 	      //printHashMap();
+		runParsing();
 	    getSongHeat();
 	    //printSongHeatMap();  
 		

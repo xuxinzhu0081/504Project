@@ -35,12 +35,12 @@ public class GetSongHeat extends ParseAgain{
 					
 					//update heat
 					song.setHeat(heat);
+					
 				}
 				else{
 
 					SongCell song=new SongCell(songID,playListId);
 					song.setHeat(heat);
-
 					songHeatMap.put(songID, song);	
 					
 				}
@@ -66,14 +66,16 @@ public class GetSongHeat extends ParseAgain{
 	
 /* help function to debug*/
 	
-	public static void printSongHeatMap(){
+	public static void printSongHeatMap(int count){
+		int i=0;
 	      Iterator<Entry<Integer,SongCell>> songHeatMapItr=songHeatMap.entrySet().iterator();
-	      while(songHeatMapItr.hasNext()){
+	      while(songHeatMapItr.hasNext()&&i<count){
 	          Map.Entry<Integer,SongCell> entry =(Map.Entry<Integer,SongCell>)songHeatMapItr.next();
 	          int SID=entry.getKey();
 	          SongCell song=entry.getValue();
 	          //System.out.println(" SID "+SID+" heat "+song.heat);
 	          song.ListSongInfo();
+	          i++;
 	      }
 	}
 	
@@ -84,23 +86,6 @@ public class GetSongHeat extends ParseAgain{
 	      System.out.println(heat);
 	      song.ListSongInfo();
 	      
-	}
-	
-	
-	
-	public static void process() throws IOException{
-		//printHeap();
-		//GeneratePlayListMap();
-		//WriteToFile(); //write playlist hashmap to txt file
-	    //GenerateSongMap(); //generate songmap
-	      //printHashMap();
-	    //SearchTop8();
-	    //WriteTop128();
-	      //printHashMap();
-		runParsing();
-	    getSongHeat();
-	    //printSongHeatMap();  
-		
 	}
 	
 }

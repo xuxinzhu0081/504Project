@@ -13,35 +13,60 @@ public class userInput extends CachedTrie{
 	 *  5. return top 4 related song when user type a song
 	 */
 	
-	public static void main (String[] args) throws IOException{
-		//initialize playListMap, songListMap, calculate songHeat
-		//CachedTrie();
-		runParsing();
-		initTable();
-		getSongHeat();
-		constructTree();
+	public static void searchSong() throws IOException{
 		
-		//printPlayListMap();
-
-		while(true){
-			System.out.println("type name");
+			System.out.println("type the song you want to search");
 			BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 			String name=br.readLine();
-			if(name=="123"){
-				break;
-			}
-			int[] res= findSubstring(name);
-			
-			
+						int res[]=findSubstring(name);
+			//resolve order
+			//res=CachedTrie.orderResult(res);		
+						
 			if(findSubstring(name)!=null){
-				for(int i=0;i<res.length;i++)
+				for(int i=0;i<res.length;i++){
 					System.out.println(songMap.get(res[i]));
+				}
 			}
-			
-			else continue;	
-		}
+	}
+	
+	public static void uploadFile()throws IOException{
+		System.out.println("please type the file you want to upload (eg.day00.txt" );
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		String fileName =br.readLine();
+		load.updateSource(fileName);
+		load.updateSongHeat();
+		//printSongHeatMap();
+
+		load.updateMinMaxHeap();
+
+		load.updateTrieNode();
+
 		
-		return;
-	}		
+	}
+	
+	
+	/*
+	public static void main (String[] args) throws IOException{
+		//init playListMap, songMap, songHeatMap
+		ParseAgain.runParsing();
+		GetSongHeat.getSongHeat();
+		printSongHeatMap(5);
+
+		
+		ParseAgain.printPlayListMap(playListMap);
+		ParseAgain.printSongHashMap();
+		
+		//get top 1024
+		maintain1024.InitMaxMinHeap();
+		CachedTrie.constructTree();
+		while(true){
+			searchSong();
+			uploadFile();
+		}
+		//printSongHeatMap(5);
+
+		
+	}	
+	*/	
 }
 

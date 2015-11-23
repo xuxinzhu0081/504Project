@@ -17,16 +17,24 @@ public class maintain1024 extends ParseAgain {
 		//build size 1024 max_heap and min_heap
 		
 		public static class MaxHeap{
+			
 			public int size;
 			public int[] maxheap;
 			public int maxsize;
+			public HashMap<Integer,Vector<Integer>> map;
 			public static final int FRONT=1;
 			public MaxHeap(int maxsize){
+				this.map=playListMap;
 				this.size=0;
 				this.maxsize=maxsize;
 				maxheap=new int[this.maxsize+1];
 				maxheap[0]=Integer.MAX_VALUE;
 			}
+			
+			public void setMap(HashMap<Integer,Vector<Integer>> map){
+				this.map=map;
+			}
+			
 			public int getMaxHeat(){
 				return heat(maxheap[FRONT]);
 			}
@@ -44,6 +52,10 @@ public class maintain1024 extends ParseAgain {
 					return true;
 				else return false;
 			}
+			
+			
+			
+			
 			public void swap(int i, int j){
 				int temp=maxheap[i];
 				maxheap[i]=maxheap[j];
@@ -52,8 +64,10 @@ public class maintain1024 extends ParseAgain {
 			
 			public int heat(int index){
 				if(index==Integer.MAX_VALUE) return Integer.MAX_VALUE;
-				return playListMap.get(index).elementAt(0);
+				return map.get(index).elementAt(0);
 			}
+			
+			
 			
 			public void maxHeapify(int root){
 				if(!isLeaf(root)){
@@ -69,6 +83,7 @@ public class maintain1024 extends ParseAgain {
 					}
 				}
 			}
+			
 			public void insert(int index){
 				maxheap[++size]=index;
 				int current=size;
@@ -91,12 +106,16 @@ public class maintain1024 extends ParseAgain {
 					System.out.print(maxheap[i]+" ");
 				System.out.println();
 			}
+			
+			
+			
 			public int pop(){
 				int poped=maxheap[FRONT];
 				maxheap[FRONT]=maxheap[size--];
 				maxHeapify(FRONT);
 				return poped;
 			}
+			
 			public void delete(int index){
 				for(int i=1;i<=maxsize;i++){
 					if(index==maxheap[i]){
@@ -113,9 +132,11 @@ public class maintain1024 extends ParseAgain {
 			public int[] minheap;
 			public int maxsize;
 			public static final int FRONT=1;
+			public HashMap<Integer,Vector<Integer>> map;
 			public MinHeap(int maxsize){
 				this.size=0;
 				this.maxsize=maxsize;
+				this.map=playListMap;
 				minheap=new int[this.maxsize+1];
 				minheap[0]=Integer.MIN_VALUE;
 			}
@@ -123,6 +144,10 @@ public class maintain1024 extends ParseAgain {
 				return heat(minheap[FRONT]);
 			}
 			
+			
+			public void setMap(HashMap<Integer,Vector<Integer>> map){
+				this.map=map;
+			}
 			
 			public int parent(int i){
 				return i/2;
@@ -146,7 +171,7 @@ public class maintain1024 extends ParseAgain {
 			
 			public int heat(int index){
 				if(index==Integer.MIN_VALUE) return Integer.MIN_VALUE;
-				return playListMap.get(index).elementAt(0);
+				return map.get(index).elementAt(0);
 			}
 			
 			public void minHeapify(int root){
@@ -202,6 +227,7 @@ public class maintain1024 extends ParseAgain {
 		}
 		
 		
+		
 		public static void InitMaxMinHeap(){
 			Iterator<Entry<Integer,Vector<Integer>>> playListMapItr=playListMap.entrySet().iterator();
 	          int count=0;
@@ -232,20 +258,6 @@ public class maintain1024 extends ParseAgain {
 			  System.out.println("you have map size"+count);
 		}
 		
-		
-		
-		public static void main(String[] args) throws IOException{
-			runParsing();
-			GetSongHeat.getSongHeat();
-			//get top 1024
-			InitMaxMinHeap();
-			load.updateSource();
-
-			//printPlayListMap(load.playListMap);
-			//printPlayListMap(load.playListMap_day);
-			load.updateSongHeat();
-			//GetSongHeat.printSongHeatMap();
-		}
 	}
 
 

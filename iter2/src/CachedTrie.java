@@ -73,7 +73,7 @@ public class CachedTrie extends GetSongHeat{
 	public static void constructTree(){
 		int count=0;
 
-		System.out.println("size of map is"+songMap.size());
+		//System.out.println("size of map is"+songMap.size());
 		//itertate in songHeatMap, get the heat from songHeatMap and name
 		Iterator it=songMap.entrySet().iterator();
 		while(it.hasNext()){
@@ -109,10 +109,10 @@ public class CachedTrie extends GetSongHeat{
 	
 	public static void resolveTop4(TrieNode runner, int id){
 		//print current runner 
-		System.out.println("im runner " +runner.word);
+		//System.out.println("im runner " +runner.word);
 		int heat=getHeat(id);
 
-		System.out.println("song id with "+id+" heat is "+ heat);
+		//System.out.println("song id with "+id+" heat is "+ heat);
 		
 		//if this song never appears in playlist, bypass it
 		if(heat==-1) return;
@@ -131,10 +131,11 @@ public class CachedTrie extends GetSongHeat{
 			runner.topId[min_id]=id;
 		}
 		//debug 
-		for(int i=0;i<4;i++){
+		/*for(int i=0;i<4;i++){
 			System.out.print(runner.topId[i]+" ");
 		}
 		System.out.println();
+		*/
 	}
 	
 		
@@ -167,37 +168,6 @@ public class CachedTrie extends GetSongHeat{
 	      return res;
 	}
 	
-
-	
-
-	
-	/*
-	public static void searchSubstring(TrieNode root,int level, char[] collectLetters, String substring){
-		boolean found=false;
-		if(root==null) return ;
-		for(int i=0;i<root.children.length;i++){
-			System.out.println();
-			collectLetters[level]=root.word;
-			searchSubstring(root.children[i],level++,collectLetters,substring);
-		}
-		if(root.isEnd){
-			for(int j=1;j<=level;j++){
-				if(collectLetters[j]==substring.charAt(0)&&collectLetters[j+1]==substring.charAt(1)){
-					found=true;
-					break;
-				}
-			}
-		}
-		
-		if(found){
-			for(int j=1;j<=level;j++){
-				System.out.println(collectLetters[j]);
-				
-			}
-			System.out.println();
-		}
-	}
-	*/
 	public static boolean findWord(String word){
 		TrieNode currentNode=root;
 		//fix word
@@ -243,11 +213,15 @@ public class CachedTrie extends GetSongHeat{
 		
 		
 		//print top 4 string related with current word
-		
-		int[] relatedSong=currentNode.topId;
+		if(currentNode==null){
+			System.out.println("not exist");
+			return null;
+		}
+		/*
 		for(int count=0;count<relatedSong.length;count++){
 			System.out.println(relatedSong[count]);
 		}
+		*/
 		//if(index==size&&currentNode==null) return res;
 		//if(currentNode!=null&&!currentNode.isEnd) return res;
 		return currentNode.topId;
@@ -269,7 +243,7 @@ public class CachedTrie extends GetSongHeat{
 	}
 	
 	
-	public static void main(String[] args) throws IOException{
+	public static void CachedTrie () throws IOException{
 		process();
 		initTable();
 		//ArrayList<Integer> test=findInsertPosition("ACdegH");
@@ -281,21 +255,13 @@ public class CachedTrie extends GetSongHeat{
 		//System.out.println(test);
 		constructTree();
 		char[] pool=new char[50];
-		//printTrie(root,0,pool);
-		boolean found=findWord("you  plz");
-		System.out.println("found"+found);
-		//searchSubstring(root,1,pool,"A heart that");
-		//test case for top4 with whate
-		int[] res=findSubstring("listen");
-		int heat1=getHeat(3095);
-		int heat2=getHeat(2322);
-		int heat3=getHeat(923);
-		//int heat4=getHeat(148);
-		//int heat5=getHeat(2817);
-		System.out.println(heat1+" "+heat2+" "+heat3+" ");
-		//res=orderResult(res);
+		printTrie(root,0,pool);
+		//boolean found=findWord("listen");
+		//System.out.println("found"+found);
+
 		
 	}
+	
 	
 	
 	

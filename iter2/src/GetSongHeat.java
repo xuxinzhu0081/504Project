@@ -87,29 +87,17 @@ public class GetSongHeat extends ParsePlayList{
 	      
 	}
 	
-	/*public static void main(String[] args) throws IOException{
-	      GeneratePlayListMap();
-	      WriteToFile(); //write playlist hashmap to txt file
-	      GenerateSongMap(); //generate songmap
-	      //printHashMap();
-	      SearchTop8();
-	      WriteTop128();
-	      //printHashMap();
-	      getSongHeat();
-	      printSongHeatMap();      
-	}
-	*/
+	
 	public static void process() throws IOException{
 		GeneratePlayListMap();
-		WriteToFile(); //write playlist hashmap to txt file
-	    GenerateSongMap(); //generate songmap
-	      //printHashMap();
+		WriteToFile(); 			//write playlist hashmap to txt file
+	    GenerateSongMap(); 		//generate songmap
+	   //printHashMap();
 	    SearchTop8();
-	    WriteTop128();
-	      //printHashMap();
+	    WriteTop8();
+	    //printHashMap();
 	    getSongHeat();
 	    //printSongHeatMap();  
-		
 	}
 	
 }

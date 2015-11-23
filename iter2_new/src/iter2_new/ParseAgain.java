@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map.Entry;
-
-
 import java.util.*;
 
 
@@ -19,10 +17,32 @@ public class ParseAgain{
 	public static HashMap<Integer,SongCell> songHeatMap=new HashMap<>();
 
 
-	public static int[] minheap=new int[1025];
-	public static int[] maxheap=new int[1025];
+	//public static int[] minheap=new int[1025];
+	//public static int[] maxheap=new int[1025];
 	
-	public static int root=1;
+	public static int ROOT=1;
+	
+	
+	public static TrieNode root=new TrieNode('#');
+	public static HashMap<Character,Integer> lookupTable=new HashMap<>();
+	public static class TrieNode{
+		public char word;
+		public boolean isEnd;
+		//save id of top4 songlist
+		public int [] topId;
+		
+		//char from A to Z 
+		public TrieNode[] children;//look up by index is fast
+		
+		public TrieNode(char word){
+			this.word=word;
+			this.isEnd=false;
+			this.children=new TrieNode[26];
+			this.topId=new int[4];
+			Arrays.fill(topId, -1);
+		}
+		
+	}
 	
 	public static class SongCell{
 		public int songID;

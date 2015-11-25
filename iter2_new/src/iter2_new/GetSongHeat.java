@@ -9,23 +9,27 @@ import java.util.Map.Entry;
 
 public class GetSongHeat extends ParseAgain{
 	//songHeatMap: ID||Heat,playListId 
-	//public static HashMap<Integer,SongCell> songHeatMap=new HashMap<>();
-	//public static HashMap<Integer,Vector<Integer>> playListMap= new HashMap<Integer,Vector<Integer>>();
 	
 	public static void getSongHeat(){
-		//iterate each entry in playlistMap and add value 
-		for(int i=0;i<playListMap.size()-1;i++){
-			Vector<Integer> songList=playListMap.get(i);
-			
-			int playListId=i;
-			//iterate from the second element
+		System.out.println("you are generating songHeat map based on playList map (sourcesize is" +playListMap.size()); 
+		Iterator it=playListMap.entrySet().iterator();
+		
+		while(it.hasNext()){
+			Map.Entry<Integer, Vector> pair=(Map.Entry)it.next();
+			Vector<Integer> songList=pair.getValue();
+			int playListId=pair.getKey();
 			int heat=songList.elementAt(0);
+			
+			//System.out.println("playListis is "+ playListId);
+			//System.out.println("its heat is "+ heat);
+			//System.out.println("*******************");
 
 			for(int j=1;j<songList.size();j++){
+				
 				int songID=songList.elementAt(j);
+				//System.out.println("song is "+ songID);
+
 				if(songHeatMap.containsKey(songID)){
-					//update the most pop list
-					
 					SongCell song=songHeatMap.get(songID);
 					int current_pop=song.popListID;
 					if(heat>playListMap.get(current_pop).elementAt(0)){
@@ -33,7 +37,6 @@ public class GetSongHeat extends ParseAgain{
 						song.popListID=current_pop;
 					}
 					
-					//update heat
 					song.setHeat(heat);
 					
 				}
@@ -44,17 +47,18 @@ public class GetSongHeat extends ParseAgain{
 					songHeatMap.put(songID, song);	
 					
 				}
-			}	
+			}
+			//System.out.println("*******************");
 		}
 			
 	}
+	
 /* helper encapsulation function	*/
 	public static int getHeat(int id){
 		if(songHeatMap.containsKey(id))
 			return songHeatMap.get(id).heat;
 		else return -1;
 	}
-	//only maintains char array , exclude everything
 	public static String getSongName(int id){	
 		String name=songMap.get(id);
 		name=name.replaceAll("[^a-zA-Z]", "");
@@ -73,7 +77,7 @@ public class GetSongHeat extends ParseAgain{
 	          Map.Entry<Integer,SongCell> entry =(Map.Entry<Integer,SongCell>)songHeatMapItr.next();
 	          int SID=entry.getKey();
 	          SongCell song=entry.getValue();
-	          //System.out.println(" SID "+SID+" heat "+song.heat);
+	          System.out.println(" SID "+SID+" heat "+song.heat);
 	          song.ListSongInfo();
 	          i++;
 	      }

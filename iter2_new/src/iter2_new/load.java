@@ -52,12 +52,12 @@ public class load extends maintain1024{
 	}
 	
 	public static void updateSongHeat(){
+		System.out.println("in updating song heat");		
 		Iterator<Entry<Integer,Vector<Integer>>> MapItr=playListMap_day.entrySet().iterator();
 		int count=0;
 	      while(MapItr.hasNext()){
 	          Map.Entry<Integer,Vector<Integer>> entry =(Map.Entry<Integer,Vector<Integer>>)MapItr.next();
 	          int heat=entry.getValue().elementAt(0);
-	          //System.out.println("in day pid is "+entry.getKey()+" heat is "+ heat);
 	          Vector<Integer> songList=entry.getValue();
 
 	      		//iterate each entry in playlistMap and add value 
@@ -65,46 +65,46 @@ public class load extends maintain1024{
 	      			for(int j=1;j<songList.size();j++){
 	      				int songID=songList.elementAt(j);
       					//System.out.println("-----------");
-
-	      				//System.out.println("current sid "+songID);
+	      				System.out.println("in updating song id "+ songID+" goig to increase heat "+ heat);
+	      				
 	      				if(songHeatMap.containsKey(songID)){
 	      					//update the most pop list
 	      					SongCell song=songHeatMap.get(songID);
 	      					int prev_pid=song.popListID;
-	      					//System.out.println("previous Heat list is "+prev_pid+"top heat"+playListMap.get(prev_pid).elementAt(0));
+							System.out.println("pop list id is "+prev_pid);
 	      					
-	      					//if top songplaylist the song lies in change, add it into playListMap
+	      				
 							if(heat>playListMap.get(prev_pid).elementAt(0)){
+								System.out.println("now pop list id changed , adding this one into playListMap with id "+ playListMap.size());
 	      						playListMap.put(playListMap.size(), songList);
-	      						int current_pop_pid=playListMap.size();
+	      						int current_pop_pid=playListMap.size()-1;
 	      						song.popListID=current_pop_pid;
+								System.out.println("after change pop list id is "+ current_pop_pid);
+
 	      					}
-							
-							if(songID==2840||songID==1009||songID==635||songID==1){
-								System.out.println("prev heat "+ song.heat);
-							}
-							
+	      					
+	      					
+									
 	      					//update heat
 							song.setHeat(heat);
 							String songName=songMap.get(song.songID);
 
-							
-							if(songID==2840||songID==1009||songID==635||songID==1){
-								System.out.println("sid is "+ songID+ " after update song heat is"+song.heat);
-								System.out.println("current song name is"+songName);
-							}
-							
-							//System.out.println("cuurent heat is "+song.heat);	      				}
+								
+							System.out.println("after update heat is "+song.heat);	      				
+						}
 	      				
-	      				}
+	      					
+	      				
 	      				else{
 	      					System.out.println("song id is"+songID);
 	      					System.out.println("error");	
 	      				}
 	      			count++;
-	      			}	
-	      	} 
-	}
+	      		}
+	      }
+	    }	
+	      	
+	
 		public static void updateMinMaxHeap(){
 			
 			 
@@ -149,7 +149,6 @@ public class load extends maintain1024{
 				  System.out.println("you have playlistmap_day size"+count2);
 				  System.out.println("you inserted new playlist into playListMap "+count1);
 			}
-			
 
 	
 	
@@ -189,7 +188,7 @@ public class load extends maintain1024{
 			}
 			
 			
-			System.out.println("current heat is "+songHeatMap.get(curId).heat);
+			//System.out.println("current heat is "+songHeatMap.get(curId).heat);
 			int[] heatArr=new int[5];
 			HashMap<Integer,Integer> heatToId=new HashMap<>();
 			

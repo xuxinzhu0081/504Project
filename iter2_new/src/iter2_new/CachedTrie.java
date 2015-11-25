@@ -67,20 +67,15 @@ public class CachedTrie extends GetSongHeat{
 				//iterate arraylist
 				for(int i=0;i<insertPos.size();i++){
 					int cur_index=insertPos.get(i);
-					//System.out.println("ith index"+cur_index);
 					
-					//System.out.println("current character is "+cur_node.word);
 					if(runner.children[cur_index]==null)
 						runner.children[cur_index]=new TrieNode(name.charAt(i));
 	
 					//go to next node
 					runner=runner.children[cur_index];
-					//System.out.print(runner.word);
 					resolveTop4(runner,id);
 						
-				}
-					//System.out.println();
-			
+				}			
 				
 				runner.isEnd=true;
 			}
@@ -91,7 +86,6 @@ public class CachedTrie extends GetSongHeat{
 		//System.out.println("im runner " +runner.word);
 		int heat=getHeat(id);
 
-		//System.out.println("song id with "+id+" heat is "+ heat);
 		
 		//if this song never appears in playlist, bypass it
 		if(heat==-1) return;
@@ -112,13 +106,7 @@ public class CachedTrie extends GetSongHeat{
 				if(runner.topId.length==4)
 					load.updateTop4(runner.topId, id);
 		}
-		//debug 
-		/*
-		for(int i=0;i<4;i++){
-			System.out.print(runner.topId[i]+" ");
-		}
-		System.out.println();
-		*/
+		
 	}
 	
 		
@@ -152,37 +140,6 @@ public class CachedTrie extends GetSongHeat{
 	}
 	
 
-	
-
-	
-	/*
-	public static void searchSubstring(TrieNode root,int level, char[] collectLetters, String substring){
-		boolean found=false;
-		if(root==null) return ;
-		for(int i=0;i<root.children.length;i++){
-			System.out.println();
-			collectLetters[level]=root.word;
-			searchSubstring(root.children[i],level++,collectLetters,substring);
-		}
-		if(root.isEnd){
-			for(int j=1;j<=level;j++){
-				if(collectLetters[j]==substring.charAt(0)&&collectLetters[j+1]==substring.charAt(1)){
-					found=true;
-					break;
-				}
-			}
-		}
-		
-		if(found){
-		
-			for(int j=1;j<=level;j++){
-				System.out.println(collectLetters[j]);
-				
-			}
-			System.out.println();
-		}
-	}
-	*/
 	public static boolean findWord(String word){
 		TrieNode currentNode=root;
 		//fix word
@@ -209,7 +166,6 @@ public class CachedTrie extends GetSongHeat{
 	
 	public static int[] findSubstring(String word){
 		TrieNode currentNode=root;
-		//Vector<String> res=new Vector<>();
 		//fix word
 		word=word.toLowerCase();
 		word=word.replaceAll("[^a-zA-Z]", "");
@@ -231,12 +187,6 @@ public class CachedTrie extends GetSongHeat{
 		//print top 4 string related with current word
 		
 		int[] relatedSong=currentNode.topId;
-		/*for(int count=0;count<relatedSong.length;count++){
-			System.out.println(relatedSong[count]);
-		}
-		*/
-		//if(index==size&&currentNode==null) return res;
-		//if(currentNode!=null&&!currentNode.isEnd) return res;
 		return currentNode.topId;
 	}
 

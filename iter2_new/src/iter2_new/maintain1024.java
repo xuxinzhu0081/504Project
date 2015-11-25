@@ -63,21 +63,31 @@ public class maintain1024 extends ParseAgain {
 			}
 			
 			public int heat(int index){
+				/*if(index==Integer.MAX_VALUE) {
+					return Integer.MAX_VALUE;
+				}
+				*/
 				if(index==Integer.MAX_VALUE) return Integer.MAX_VALUE;
-				return map.get(index).elementAt(0);
+
+				else{ 
+					return map.get(index).elementAt(0);
+				}
 			}
 			
 			
 			
 			public void maxHeapify(int root){
 				if(!isLeaf(root)){
+
 					if(heat(maxheap[root])<heat(maxheap[leftChild(root)])||heat(maxheap[root])<heat(maxheap[rightChild(root)])){
-						if(heat(leftChild(root))>heat(rightChild(root))){
-							swap(root,leftChild(root));
+
+						if(heat(maxheap[leftChild(root)])>heat(maxheap[rightChild(root)])){				
+							swap(root,leftChild(root));							
 							maxHeapify(leftChild(root));
 						}
 						else{
-							swap(root,rightChild(root));
+							
+							swap(root,rightChild(root));							
 							maxHeapify(rightChild(root));
 						}
 					}
@@ -110,8 +120,14 @@ public class maintain1024 extends ParseAgain {
 			
 			
 			public int pop(){
+
 				int poped=maxheap[FRONT];
+				//System.out.println("poped out "+ poped);
+
 				maxheap[FRONT]=maxheap[size--];
+				//System.out.println("now front is "+ maxheap[FRONT]);
+				//System.out.println("now size is "+ size);
+
 				maxHeapify(FRONT);
 				return poped;
 			}
@@ -218,7 +234,7 @@ public class maintain1024 extends ParseAgain {
 			
 			public int pop(){
 				
-				int poped=minheap[FRONT];
+				int poped=minheap[FRONT]; 
 				minheap[FRONT]=minheap[size--];
 				minHeapify(FRONT);
 
@@ -226,6 +242,84 @@ public class maintain1024 extends ParseAgain {
 			}
 		}
 		
+		
+		//get top 8 based on maxheap
+		public static void getTop8(){
+			MaxHeap temp=new MaxHeap(20000);
+			int[] top8= new int[8];
+			
+			int k=FRONT;
+			temp.insert(maxheap.maxheap[FRONT]);
+			
+			for(int i=0;i<8;i++){
+				int left=maxheap.leftChild(k);
+				int right=maxheap.rightChild(k);
+				temp.insert(maxheap.maxheap[left]);
+				temp.insert(maxheap.maxheap[right]);
+				
+				//System.out.println("add index in original "+ left+" and "+right);
+				int pop=temp.pop();
+				top8[i]=pop;
+				System.out.println("max is "+top8[i]);
+				//System.out.println("after pop size is "+ temp.size);
+				//find pop in maxheap, add its left and right child into temp
+				int nextPopId=temp.maxheap[FRONT];
+				//System.out.println("next pop Id is "+nextPopId);
+
+				//search nextPopId index in original index equal to  k
+				int id=0;
+				for(int p=1;p<maxheap.size;p++){
+					if(nextPopId==maxheap.maxheap[p])
+						id=p;
+				}
+				k=id;
+				//System.out.println("next adding index in orig "+ k);
+				
+			}				
+		}
+		
+		public static void getTop128(){
+			System.out.println("max heap size is"+maxheap.size);
+			//select top 128
+			MaxHeap auxHeap=new MaxHeap(128);
+			auxHeap.insert(maxheap.maxheap[FRONT]);
+			
+			int[] res=new int[128];
+			int leftChild=2;
+			int rightChild=3;
+			for(int i=0;i<128;i++){
+				res[i]=auxHeap.pop();
+				System.out.println("current max is "+res[i]);
+				//search poped element in original heap
+				if(leftChild<1024&&rightChild<1024){
+				auxHeap.insert(maxheap.maxheap[leftChild]);
+				auxHeap.insert(maxheap.maxheap[rightChild]);
+				
+					for(int cur=1;cur<maxheap.size;cur++){
+						if(maxheap.maxheap[cur]==auxHeap.maxheap[FRONT]){
+						
+							leftChild=maxheap.leftChild(cur);
+							//System.out.println("left child is "+leftChild);
+							rightChild=maxheap.rightChild(cur);
+							//System.out.println("right child is "+rightChild);
+						}
+					}
+				}
+				else{
+					for(int cur=1;cur<maxheap.size;cur++){
+						if(maxheap.maxheap[cur]==auxHeap.maxheap[FRONT]){
+						
+							leftChild=maxheap.leftChild(cur);
+							//System.out.println("left child is "+leftChild);
+							rightChild=maxheap.rightChild(cur);
+							//System.out.println("right child is "+rightChild);
+						}
+					}
+				}
+					
+			}
+			
+		}
 		
 		
 		public static void InitMaxMinHeap(){

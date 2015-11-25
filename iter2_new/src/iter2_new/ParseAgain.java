@@ -64,9 +64,10 @@ public class ParseAgain{
 			else return -1;
 		}
 		public void ListSongInfo(){
-			System.out.println("songID is"+ songID);
+			System.out.println("<songID> is"+ songID);
 			System.out.println(" Im most popular in songList "+ popListID);
-			System.out.println("heat is"+ heat);
+			System.out.println("<heat> is"+ heat);
+			System.out.println();
 		}
 	}
 	
@@ -113,8 +114,6 @@ public class ParseAgain{
         FileReader fileReader=new FileReader(fileName);
         BufferedReader bufferedReader=new BufferedReader(fileReader);
           while ((line=bufferedReader.readLine())!=null){
-            //process each line in some way
-        //put last digit as heat in the beginning of vector, and read each number into hashmap
             String [] token=line.split("\\t");  
             int length=token.length;
             //System.out.println("token length is"+length);          

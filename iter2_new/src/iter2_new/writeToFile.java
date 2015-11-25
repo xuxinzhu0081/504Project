@@ -18,7 +18,6 @@ public class writeToFile extends CachedTrie {
 		//some song doesn't exist in songList
 		GetSongHeat.getSongHeat();
 		System.out.println("you generated songHeat map with size"+ songHeatMap.size());
-		
 		//get top 1024 playList
 		maintain1024.InitMaxMinHeap();
 
@@ -29,22 +28,38 @@ public class writeToFile extends CachedTrie {
 		System.out.println("***************");
 		System.out.println("begin to write top 1024 playList");
 		writeTop1024();
-		//writeTop8();
+		
+		System.out.println("now get top 8");
+		maintain1024.getTop8();
+		System.out.println("now get top 128");
+
+		maintain1024.getTop128();
 		//writeTop128();
 		System.out.println("successfully initialize top 1024 playList to file top1024.xml");
 		System.out.println("***************");
 		
-		//CachedTrie.constructTree();
+		CachedTrie.constructTree();
 		System.out.println("successfully initialize trie");
 		System.out.println("***************");
 		
-		//load more data
-		//userInput.uploadFile();
-		//writeTop1024();
+		
+		System.out.println("search song");
+		int i=0;
+		while(i<5){
+		userInput.searchSong();
+		i++;
+		}
+			
+		
+		//test load more data
+		
+		userInput.uploadFile();
+		writeTop1024();
 		System.out.println("1024.xml has been updated");
 		System.out.println("");
-		
-		
+		for(int count = 0; count<3; count++){
+			userInput.searchSong();
+		}
 		
 	
 	}
@@ -122,7 +137,7 @@ public class writeToFile extends CachedTrie {
 			bufferedWriter.write("    <list>");
 			bufferedWriter.newLine();
 			int playListId=maintain1024.maxheap.maxheap[i];
-			//bufferedWriter.write("id : "+playListId);
+			bufferedWriter.write("id : "+playListId);
 
 			//System.out.println("current playlist id is"+playListId);
 			bufferedWriter.write("      <order>");

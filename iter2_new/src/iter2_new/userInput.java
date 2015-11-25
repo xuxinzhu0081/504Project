@@ -29,6 +29,7 @@ public class userInput extends CachedTrie{
 			}
 	}
 	
+	
 	public static void uploadFile()throws IOException{
 		System.out.println("please type the file you want to upload (eg.day00.txt" );
 		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
@@ -36,9 +37,7 @@ public class userInput extends CachedTrie{
 		load.updateSource(fileName);
 		load.updateSongHeat();
 		//printSongHeatMap();
-
 		load.updateMinMaxHeap();
-
 		load.updateTrieNode();
 
 		

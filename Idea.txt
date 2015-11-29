@@ -1,3 +1,0 @@
-f you break the list of words of all data (track name, band, album) you could have a hashtable indexed by the words with a linked list as the value containing all the tracks that have that occurrence.
-
-For the searching you could have a B+ tree to index the words to get to the keys of the hashtable (more or less like a word processor does for the autocorrection).

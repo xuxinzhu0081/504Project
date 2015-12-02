@@ -9,11 +9,16 @@
 
 4) given a song, suggest the top playlists song lies in.
 
-## how to run it
+5) when user typing, suggest top 4 songs with current string. 
+
+### how to run it
 import the project in Netbeans
 
 run file "testSwing.java".
 
 click upload button when want to add new data source. Make sure you have import the file in same directory with project.
+
+### Data Structure used 
+Max-Min heap, HashMap, Trie
 
 

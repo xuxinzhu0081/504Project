@@ -1,6 +1,6 @@
 # 504 Final Project : PlayList App
-###This is a data structure project written in Java supporting following basic operations:
----
+### A data structure course project written in Java supporting following basic operations:
+
 1) get top 8 playlists based on popularity 
 
 2) get top 128 playlists based on popularity

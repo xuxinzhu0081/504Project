@@ -11,7 +11,7 @@
 
 5) when user typing, suggest top 4 songs with current string. 
 
-### how to run it
+### How to run it
 import the project in Netbeans
 
 run file "testSwing.java".
